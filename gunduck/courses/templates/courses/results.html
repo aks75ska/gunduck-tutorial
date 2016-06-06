@@ -1,0 +1,9 @@
+<h1>{{ courseType.course_type_name }}</h1>
+
+<ul>
+{% for choice in courseType.courses_set.all %}
+    <li>{{ choice.course_name }} -- {{ choice.joinees }} joinee{{ choice.joinees|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'courses:detail' courseType.id %}">Join again?</a>

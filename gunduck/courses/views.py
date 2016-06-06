@@ -16,8 +16,8 @@ def detail(request, course_type_id):
     return render(request, 'courses/detail.html', {'courseType': courseType})
 
 def results(request, course_type_id):
-    response = "You're looking at the courses of the course type %s."
-    return HttpResponse(response % course_type_id)
+    courseType = get_object_or_404(CourseTypes, pk=course_type_id)
+    return render(request, 'courses/results.html', {'courseType': courseType})
 
 def join(request, course_type_id):
     p = get_object_or_404(CourseTypes, pk=course_type_id)
