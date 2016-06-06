@@ -1,0 +1,10 @@
+{% if course_type_list %}
+    <h1>COURSE TYPES</h1>
+    <ul>
+    {% for courseType in course_type_list %}
+        <li><a href="/courses/{{ courseType.id }}/">{{ courseType.course_type_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Course Types are available.</p>
+{% endif %}
