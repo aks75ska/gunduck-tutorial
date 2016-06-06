@@ -22,6 +22,7 @@ class Courses(models.Model):
     course_description = models.CharField(max_length=500)
     course_type = models.ForeignKey(CourseTypes)
     created_time = models.DateTimeField('date and time of creation')
+    joinees = models.BigIntegerField(default=0)
 
     def __unicode__(self):
         return str(self.course_name)

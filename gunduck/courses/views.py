@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from courses.models import CourseTypes, Courses
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 def index(request):
@@ -19,5 +20,21 @@ def results(request, course_type_id):
     return HttpResponse(response % course_type_id)
 
 def join(request, course_type_id):
-    return HttpResponse("You're joining a course of this course type %s." % course_type_id)
+    p = get_object_or_404(CourseTypes, pk=course_type_id)
+    try:
+        selected_choice = p.courses_set.get(pk=request.POST['choice'])
+    except (KeyError, Courses.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'courses/detail.html', {
+            'courseType': p,
+            'error_message': "You didn't select a course.",
+        })
+    else:
+        selected_choice.joinees += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('courses:results', args=(p.id,)))
+    # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
 

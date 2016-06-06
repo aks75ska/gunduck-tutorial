@@ -1,6 +1,12 @@
 <h1>{{ courseType.course_type_name }}</h1>
-<ul>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'courses:join' courseType.id %}" method="post">
+{% csrf_token %}
 {% for choice in courseType.courses_set.all %}
-    <li>{{ choice.course_name }}</li>
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.course_name }}</label><br />
 {% endfor %}
-</ul>
+<input type="submit" value="Join" />
+</form>
