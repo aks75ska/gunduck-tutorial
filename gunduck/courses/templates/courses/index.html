@@ -2,7 +2,7 @@
     <h1>COURSE TYPES</h1>
     <ul>
     {% for courseType in course_type_list %}
-        <li><a href="/courses/{{ courseType.id }}/">{{ courseType.course_type_name }}</a></li>
+        <li><a href="{% url 'courses:detail' courseType.id %}">{{ courseType.course_type_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
