@@ -25,7 +25,7 @@ SECRET_KEY = 'acok&vl#xshm1l$dms05o6lum#k2u824+(-&99dib^&v4t7y(r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gunduck.com', 'www.gunduck.com']
 
 
 # Application definition
