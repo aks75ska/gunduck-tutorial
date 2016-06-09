@@ -95,6 +95,12 @@ TIME_ZONE = 'Asia/Kolkata'
 
 # USE_TZ = True
 
+#STATIC_ROOT = '/home/aks75ska/webapps/gunduck_static_app/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
