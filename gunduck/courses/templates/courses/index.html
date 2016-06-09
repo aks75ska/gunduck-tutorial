@@ -1,14 +1,23 @@
 {% load staticfiles %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'courses/style.css' %}" />
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-{% if course_type_list %}
-    <h1>COURSE TYPES</h1>
-    <ul>
-    {% for courseType in course_type_list %}
-        <li><a href="{% url 'courses:detail' courseType.id %}">{{ courseType.course_type_name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No Course Types are available.</p>
-{% endif %}
+<div class="container">
+    {% if course_type_list %}
+        <h1>COURSE TYPES</h1>
+        <ul class="list-group">
+        {% for courseType in course_type_list %}
+            <li class="list-group-item"><a href="{% url 'courses:detail' courseType.id %}">{{ courseType.course_type_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Course Types are available.</p>
+    {% endif %}
+</div>

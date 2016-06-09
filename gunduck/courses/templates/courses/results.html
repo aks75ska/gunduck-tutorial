@@ -1,9 +1,22 @@
-<h1>{{ courseType.course_type_name }}</h1>
+{% load staticfiles %}
 
-<ul>
-{% for choice in courseType.courses_set.all %}
-    <li>{{ choice.course_name }} -- {{ choice.joinees }} joinee{{ choice.joinees|pluralize }}</li>
-{% endfor %}
-</ul>
+<link rel="stylesheet" type="text/css" href="{% static 'courses/style.css' %}" />
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<a href="{% url 'courses:detail' courseType.id %}">Join again?</a>
+<div class="container">
+    <h1>{{ courseType.course_type_name }}</h1>
+
+    <ul>
+    {% for choice in courseType.courses_set.all %}
+        <li>{{ choice.course_name }} -- {{ choice.joinees }} joinee{{ choice.joinees|pluralize }}</li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'courses:detail' courseType.id %}">Join again?</a>
+</div>

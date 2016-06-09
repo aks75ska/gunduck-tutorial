@@ -1,12 +1,28 @@
-<h1>{{ courseType.course_type_name }}</h1>
+{% load staticfiles %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'courses/style.css' %}" />
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-<form action="{% url 'courses:join' courseType.id %}" method="post">
-{% csrf_token %}
-{% for choice in courseType.courses_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.course_name }}</label><br />
-{% endfor %}
-<input type="submit" value="Join" />
-</form>
+<div class="container">
+    <h1>{{ courseType.course_type_name }}</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'courses:join' courseType.id %}" method="post" role="form">
+    {% csrf_token %}
+    <div class="form-group">
+        {% for choice in courseType.courses_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.course_name }}</label><br />
+        {% endfor %}
+    </div>
+    <!-- <input type="submit" value="Join" /> -->
+    <button type="submit" class="btn btn-default" value="Join">Submit</button>
+    </form>
+</div>
