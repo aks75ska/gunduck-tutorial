@@ -4,6 +4,7 @@ from courses.models import CourseTypes, Courses
 from django.core.urlresolvers import reverse
 import json
 import requests
+import logging
 
 # Create your views here.
 def index(request):
@@ -42,7 +43,9 @@ def join(request, course_type_id):
 
 def faceBookChatBot(request):
     print "YAHOOOOOO"
+    logging.warning('YAHOOOOOO')
     print request
+    logging.warning(str(request))
     if request.method == 'GET':
         try:
             if request.GET['hub.verify_token'] == "mindsaw_should_get_verified":
