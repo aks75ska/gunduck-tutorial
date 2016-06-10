@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from courses.models import CourseTypes, Courses
 from django.core.urlresolvers import reverse
 import json
+import requests
 
 # Create your views here.
 def index(request):
@@ -127,4 +128,10 @@ def sendTextMessage(senderId, messageToSend):
     callSendAPI(messageData);
 
 def callSendAPI(messageData):
+    PAGE_ACCESS_TOKEN = "EAAB7yhcKATcBALT1NgyX6ZCoBpTSHOkc1iXdylk6TkZAUiZAo5aRdDjikQvQZAyQcDTdVGO1xwLIw2vdH7bUx9z9qUAnKZBycd2IRjFO6lsJmtZCPSWXJ1LTLnUDGJ1EkqoeCtOllFClPHMxeUkbUYP9UCVFY7EdMPhZCHre400jQZDZD"
     print "CALLING SEND API" + messageData
+    try:
+        response = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token="+PAGE_ACCESS_TOKEN, data=messageData,
+            headers = {"Content-Type": 'application/json'})
+    except Exception as e:
+        print e
