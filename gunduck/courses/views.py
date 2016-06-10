@@ -42,13 +42,13 @@ def join(request, course_type_id):
 def faceBookChatBot(request):
     if request.method == 'GET':
         try:
-            if request.args.get("hub.verify_token") == "mindsaw_should_get_verified":
-                return request.args.get("hub.challenge")
+            if request.GET.get("hub.verify_token") == "mindsaw_should_get_verified":
+                return request.GET.get("hub.challenge")
             else:
-                return HttpResponse(json.dumps([{"validation": "Hit made to webhook in get!", "status": True}]), content_type = "application/json")
+                return HttpResponse(json.dumps([{"v": "Hit made to webhook in get!", "status": True}]), content_type = "application/json")
         except Exception as e:
-            return HttpResponse(json.dumps([{"validation": str(e), "status": True}]), content_type = "application/json")
+            return HttpResponse(json.dumps([{"v": str(e), "status": True}]), content_type = "application/json")
     else:
-        return HttpResponse(json.dumps([{"validation": "Hit made to webhook but not get!", "status": True}]), content_type = "application/json")
+        return HttpResponse(json.dumps([{"v": "Hit made to webhook but not get!", "status": True}]), content_type = "application/json")
 
 
