@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from courses.models import CourseTypes, Courses
 from django.core.urlresolvers import reverse
+import json
 
 # Create your views here.
 def index(request):
