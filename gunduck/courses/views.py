@@ -38,3 +38,7 @@ def join(request, course_type_id):
         return HttpResponseRedirect(reverse('courses:results', args=(p.id,)))
     # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
 
+def faceBookChatBot(request):
+    return HttpResponse(json.dumps([{"validation": "Hit made to webhook!", "status": True}]), content_type = "application/json")
+
+
