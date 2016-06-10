@@ -48,10 +48,65 @@ def faceBookChatBot(request):
                 bytesE = request.GET['hub.challenge'].encode('utf-8')
                 return HttpResponse(bytesE, content_type = "application/json")
             else:
-                return HttpResponse(json.dumps([{"v": "Hit made to webhook in get!", "status": False}]), content_type = "application/json")
+                return HttpResponse(json.dumps([{"v": "Wrong token", "status": False}]), content_type = "application/json")
+        except Exception as e:
+            return HttpResponse(json.dumps([{"v": str(e), "status": False}]), content_type = "application/json")
+    elif request.method == 'POST':
+        try:
+            if request.body:
+                dataDictionary = json.loads(request.body)
+                if dataDictionary['object'] == "page":
+                    allEntries = dataDictionary['entry']
+                    for oneEntry in allEntries:
+                        pageId = oneEntry['id']
+                        ReceiveTime = oneEntry['time']
+                        allMessages = oneEntry['messaging']
+                        for oneMessage in allMessages:
+                            try:
+                                messageObject = oneMessage['message']
+                                messageType = 'message'
+                            except:
+                                messageObject = None
+                            if messageObject == None:
+                                try:
+                                    messageObject = oneMessage['optin']
+                                    messageType = 'optin'
+                                except:
+                                    messageObject = None
+                            if messageObject == None:
+                                try:
+                                    messageObject = oneMessage['delivery']
+                                    messageType = 'delivery'
+                                except:
+                                    messageObject = None
+                            if messageObject == None:
+                                try:
+                                    messageObject = oneMessage['postback']
+                                    messageType = 'postback'
+                                except:
+                                    messageObject = None
+                            if messageObject == None:
+                                messageType = 'None'
+                            registerCall(oneMessage, messageType)
+                    #return HttpResponse(json.dumps([{"v": "Msg Received", "status": True}]), content_type = "application/json")
+                    return HttpResponse(status=200)
+                else:
+                    return HttpResponse(json.dumps([{"v": "Response not from page", "status": False}]), content_type = "application/json")
+            else:
+                return HttpResponse(json.dumps([{"v": "Response body not found", "status": False}]), content_type = "application/json")
         except Exception as e:
             return HttpResponse(json.dumps([{"v": str(e), "status": False}]), content_type = "application/json")
     else:
         return HttpResponse(json.dumps([{"v": "No Get or Post", "status": False}]), content_type = "application/json")
 
-
+def registerCall(oneMessage, messageType):
+    if messageType == "message":
+        print "MESSAGE RECEIVED"
+        senderId = oneMessage['sender']['id']
+        recepientPageId = oneMessage['recipient']['id']
+        messageTime = oneMessage['timestamp']
+        msgMID = messageObject['mid']
+        msgSEQ = messageObject['seq']
+        msgTEXT = messageObject['text']
+    else:
+        print messageType+" Received"
