@@ -123,7 +123,7 @@ def registerCall(oneMessage, messageType):
         print messageType+" Received"
 
 def sendTextMessage(senderId, messageToSend):
-    var messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"text" : messageToSend}})
+    messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"text" : messageToSend}})
     callSendAPI(messageData);
 
 def callSendAPI(messageData):
