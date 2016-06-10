@@ -40,6 +40,8 @@ def join(request, course_type_id):
     # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
 
 def faceBookChatBot(request):
+    print "YAHOOOOOO"
+    print request
     if request.method == 'GET':
         try:
             if request.GET.get("hub.verify_token") == "mindsaw_should_get_verified":
