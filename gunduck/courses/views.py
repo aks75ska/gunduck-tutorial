@@ -107,6 +107,24 @@ def registerCall(oneMessage, messageType):
         messageTime = oneMessage['timestamp']
         msgMID = messageObject['mid']
         msgSEQ = messageObject['seq']
-        msgTEXT = messageObject['text']
+        try:
+            msgTEXT = messageObject['text']
+            sendTextMessage(senderId, msgTEXT);
+        except:
+            msgTEXT = None
+        if msgTEXT == None:
+            try:
+                msgTEXT = messageObject['attachments']
+                sendTextMessage(senderId, "Message with attachment received");
+            except:
+                msgTEXT = None
+                print "NO TEXT NO ATTACHMENT"
     else:
         print messageType+" Received"
+
+def sendTextMessage(senderId, messageToSend):
+    var messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"text" : messageToSend}})
+    callSendAPI(messageData);
+
+def callSendAPI(messageData):
+    print "CALLING SEND API" + messageData
