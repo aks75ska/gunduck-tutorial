@@ -44,8 +44,9 @@ def faceBookChatBot(request):
     print request
     if request.method == 'GET':
         try:
-            if request.GET.get("hub.verify_token") == "mindsaw_should_get_verified":
-                return request.GET.get("hub.challenge")
+            if request.GET['hub.verify_token'] == "mindsaw_should_get_verified":
+                bytesE = request.GET['hub.challenge'].encode('utf-8')
+                return HttpResponse(bytesE, content_type = "application/json")
             else:
                 return HttpResponse(json.dumps([{"v": "Hit made to webhook in get!", "status": True}]), content_type = "application/json")
         except Exception as e:
