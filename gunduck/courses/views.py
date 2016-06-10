@@ -48,10 +48,10 @@ def faceBookChatBot(request):
                 bytesE = request.GET['hub.challenge'].encode('utf-8')
                 return HttpResponse(bytesE, content_type = "application/json")
             else:
-                return HttpResponse(json.dumps([{"v": "Hit made to webhook in get!", "status": True}]), content_type = "application/json")
+                return HttpResponse(json.dumps([{"v": "Hit made to webhook in get!", "status": False}]), content_type = "application/json")
         except Exception as e:
-            return HttpResponse(json.dumps([{"v": str(e), "status": True}]), content_type = "application/json")
+            return HttpResponse(json.dumps([{"v": str(e), "status": False}]), content_type = "application/json")
     else:
-        return HttpResponse(json.dumps([{"v": "Hit made to webhook but not get!", "status": True}]), content_type = "application/json")
+        return HttpResponse(json.dumps([{"v": "No Get or Post", "status": False}]), content_type = "application/json")
 
 
