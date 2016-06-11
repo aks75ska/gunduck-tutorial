@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import CourseTypes, Courses
+from .models import CourseTypes, Courses, ImageLocker
 
 class CoursesInline(admin.TabularInline):
     model = Courses
@@ -15,4 +15,11 @@ class CourseTypesAdmin(admin.ModelAdmin):
     search_fields = ['course_type_name']
     inlines = [CoursesInline]
 
+class ImageLockerAdmin(admin.ModelAdmin):
+    fields = ['name', 'photo']
+    list_display = ('name', 'photo')
+    list_filter = ['name']
+    search_fields = ['name']
+
 admin.site.register(CourseTypes, CourseTypesAdmin)
+admin.site.register(ImageLocker, ImageLockerAdmin)

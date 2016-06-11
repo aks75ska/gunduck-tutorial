@@ -28,3 +28,13 @@ class Courses(models.Model):
     def __unicode__(self):
         return str(self.course_name)
 
+def get_upload_file_name(instance, filename):
+    return "uploaded_files/courses_images/%s_%s" %(filename.replace(' ','_'), str(time()).replace('.','_'))
+
+class ImageLocker(models.Model):
+    name = models.CharField(max_length=255)
+    photo = models.FileField(upload_to=get_upload_file_name)
+
+    def __unicode__(self):
+        return str(self.name)
+
