@@ -63,3 +63,6 @@ target/
 
 # database
 Project_Database/
+
+# settings.py
+gunduck/gunduck/settings.py
