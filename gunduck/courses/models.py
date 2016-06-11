@@ -30,7 +30,7 @@ class Courses(models.Model):
         return str(self.course_name)
 
 def get_upload_file_name(instance, filename):
-    return "uploaded_files/courses_images/%s_%s" %(filename.replace(' ','_'), str(time()).replace('.','_'))
+    return "uploaded_files/locker_images/%s_%s" %(filename.replace(' ','_'), str(time()).replace('.','_'))
 
 class ImageLocker(models.Model):
     name = models.CharField(max_length=255)
