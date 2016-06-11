@@ -43,9 +43,7 @@ def join(request, course_type_id):
 
 def faceBookChatBot(request):
     print "YAHOOOOOO"
-    logging.error('YAHOOOOOO')
     print request
-    logging.error(str(request))
     if request.method == 'GET':
         try:
             if request.GET['hub.verify_token'] == "mindsaw_should_get_verified":
@@ -109,6 +107,7 @@ def registerCall(oneMessage, messageType):
         senderId = oneMessage['sender']['id']
         recepientPageId = oneMessage['recipient']['id']
         messageTime = oneMessage['timestamp']
+        messageObject = oneMessage['message']
         msgMID = messageObject['mid']
         msgSEQ = messageObject['seq']
         try:
@@ -132,7 +131,7 @@ def sendTextMessage(senderId, messageToSend):
 
 def callSendAPI(messageData):
     PAGE_ACCESS_TOKEN = "EAAB7yhcKATcBALT1NgyX6ZCoBpTSHOkc1iXdylk6TkZAUiZAo5aRdDjikQvQZAyQcDTdVGO1xwLIw2vdH7bUx9z9qUAnKZBycd2IRjFO6lsJmtZCPSWXJ1LTLnUDGJ1EkqoeCtOllFClPHMxeUkbUYP9UCVFY7EdMPhZCHre400jQZDZD"
-    print "CALLING SEND API" + messageData
+    print "CALLING SEND API " + messageData
     try:
         response = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token="+PAGE_ACCESS_TOKEN, data=messageData,
             headers = {"Content-Type": 'application/json'})
