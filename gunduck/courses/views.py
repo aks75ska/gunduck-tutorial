@@ -131,14 +131,14 @@ def searchMovie(searchString):
         return "Your search string is too long for me to process"
     else:
         try:
-        response = requests.post("http://www.omdbapi.com/?s="+searchString)
-        dataDict = json.loads(response.body)
-        if dataDict['Response'] == "False":
-            return dataDict['Error']
-        elif dataDict['Response'] == "True":
-            return "total results found: "+dataDict['totalResults']
-        else:
-            return "Invalid Request"
+            response = requests.post("http://www.omdbapi.com/?s="+searchString)
+            dataDict = json.loads(response.body)
+            if dataDict['Response'] == "False":
+                return dataDict['Error']
+            elif dataDict['Response'] == "True":
+                return "total results found: "+dataDict['totalResults']
+            else:
+                return "Invalid Request"
         except Exception as e:
             print e
             return str(e)
