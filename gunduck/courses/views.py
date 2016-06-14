@@ -112,7 +112,8 @@ def registerCall(oneMessage, messageType):
         msgSEQ = messageObject['seq']
         try:
             msgTEXT = messageObject['text']
-            sendTextMessage(senderId, msgTEXT);
+            searchResult = searchMovie(msgTEXT)
+            sendTextMessage(senderId, searchResult);
         except:
             msgTEXT = None
         if msgTEXT == None:
@@ -124,6 +125,23 @@ def registerCall(oneMessage, messageType):
                 print "NO TEXT NO ATTACHMENT"
     else:
         print messageType+" Received"
+
+def searchMovie(searchString):
+    if len(searchString) > 20:
+        return "Your search string is too long for me to process"
+    else:
+        try:
+        response = requests.post("http://www.omdbapi.com/?s="+searchString)
+        dataDict = json.loads(response.body)
+        if dataDict['Response'] == "False":
+            return dataDict['Error']
+        elif dataDict['Response'] == "True":
+            return "total results found: "+dataDict['totalResults']
+        else:
+            return "Invalid Request"
+        except Exception as e:
+            print e
+            return str(e)
 
 def sendTextMessage(senderId, messageToSend):
     messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"text" : messageToSend}})
