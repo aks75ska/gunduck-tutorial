@@ -113,7 +113,10 @@ def registerCall(oneMessage, messageType):
         try:
             msgTEXT = messageObject['text']
             searchResult = searchMovie(senderId, msgTEXT)
-            sendTextMessage(senderId, searchResult);
+            if searchResult != "N":
+                sendTextMessage(senderId, searchResult);
+            else:
+                pass
         except:
             msgTEXT = None
         if msgTEXT == None:
@@ -141,6 +144,7 @@ def searchMovie(senderId, searchString):
                     pass
                 else:
                     sendImageMessage(senderId, posterURL)
+                    return "N"
                 return "total results found: "+dataDict['totalResults']
             else:
                 return "Invalid Request"
