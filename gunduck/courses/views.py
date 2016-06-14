@@ -132,7 +132,7 @@ def searchMovie(searchString):
     else:
         try:
             response = requests.post("http://www.omdbapi.com/?s="+searchString)
-            dataDict = json.loads(response.body)
+            dataDict = json.loads(response.content)
             if dataDict['Response'] == "False":
                 return dataDict['Error']
             elif dataDict['Response'] == "True":
