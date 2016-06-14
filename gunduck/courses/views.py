@@ -42,8 +42,8 @@ def join(request, course_type_id):
     # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
 
 def faceBookChatBot(request):
-    print "YAHOOOOOO"
-    print request
+    # print "YAHOOOOOO"
+    # print request
     if request.method == 'GET':
         try:
             if request.GET['hub.verify_token'] == "mindsaw_should_get_verified":
@@ -112,7 +112,7 @@ def registerCall(oneMessage, messageType):
         msgSEQ = messageObject['seq']
         try:
             msgTEXT = messageObject['text']
-            searchResult = searchMovie(msgTEXT)
+            searchResult = searchMovie(senderId, msgTEXT)
             sendTextMessage(senderId, searchResult);
         except:
             msgTEXT = None
@@ -126,9 +126,9 @@ def registerCall(oneMessage, messageType):
     else:
         print messageType+" Received"
 
-def searchMovie(searchString):
+def searchMovie(senderId, searchString):
     if len(searchString) > 20:
-        return "Your search string is too long for me to process"
+        return "Oops! Your search string is too long for me to process. Please enter a string with less than 20 characters :/"
     else:
         try:
             response = requests.post("http://www.omdbapi.com/?s="+searchString)
@@ -136,6 +136,11 @@ def searchMovie(searchString):
             if dataDict['Response'] == "False":
                 return dataDict['Error']
             elif dataDict['Response'] == "True":
+                posterURL = dataDict['Search'][0]['Poster']
+                if posterURL == "N/A":
+                    pass
+                else:
+                    sendImageMessage(senderId, posterURL)
                 return "total results found: "+dataDict['totalResults']
             else:
                 return "Invalid Request"
@@ -145,6 +150,13 @@ def searchMovie(searchString):
 
 def sendTextMessage(senderId, messageToSend):
     messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"text" : messageToSend}})
+    callSendAPI(messageData);
+
+def sendImageMessage(senderId, imageURL):
+    messageData = json.dumps({"recipient": {"id" : senderId}, "message": {"attachment" : {"type":"image",
+      "payload":{
+        "url": imageURL
+      } } } })
     callSendAPI(messageData);
 
 def callSendAPI(messageData):
