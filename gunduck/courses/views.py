@@ -130,7 +130,7 @@ def registerCall(oneMessage, messageType):
         print messageType+" Received"
 
 def searchMovie(senderId, searchString):
-    if len(searchString) > 20:
+    if len(searchString) > 30:
         return "Oops! Your search string is too long for me to process. Please enter a string with less than 20 characters :/"
     else:
         try:
