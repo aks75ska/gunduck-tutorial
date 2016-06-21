@@ -4,7 +4,8 @@ from courses.models import CourseTypes, Courses
 from django.core.urlresolvers import reverse
 import json
 import requests
-import logging
+from bs4 import BeautifulSoup
+import urllib2
 
 # Create your views here.
 def index(request):
@@ -40,6 +41,45 @@ def join(request, course_type_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('courses:results', args=(p.id,)))
     # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
+
+def scrapRentOHouse(request):
+    print "AKSHAY"
+    url="http://www.magicbricks.com/property-for-sale/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Residential-House,Villa,Residential-Plot&cityName=Gurgaon"
+    page = urllib2.urlopen(url)
+    soup = BeautifulSoup(page)
+    all_div=soup.find_all('div', class_='srpBlockListRow')
+    #results = []
+    final = []
+    print "AKSHAY2"
+    for one_div in all_div:
+        onclickString = str(one_div['onclick'])
+        pra = onclickString.find('event')+8
+        sub1 = onclickString[pra:]
+        pra2 = sub1.find("'")
+        sub2 = sub1[:pra2]
+        detailsUrl = "http://www.magicbricks.com"+sub2
+
+        try:
+            pageDetails = urllib2.urlopen(detailsUrl)
+            soupDetails = BeautifulSoup(pageDetails)
+            mainString = soupDetails.find('title')
+
+            #results.append(onclickString)
+            final.append(str(mainString))
+        except:
+            final.append("ERROR IN THIS: " + detailsUrl)
+
+    print "AKSHAY3"
+    finalString = ""
+    for oneF in final:
+        finalString = finalString + "\n" + oneF
+
+    # url="http://www.magicbricks.com/propertyDetails/3-BHK-1767-Sq-ft-Multistorey-Apartment-FOR-Sale-Sohna-in-Gurgaon&id=4d423230303931363830?from=search"
+    # page = urllib2.urlopen(url)
+    # soup = BeautifulSoup(page)
+    # mainString = soup.find('title')
+
+    return HttpResponse(str(finalString), content_type="application/json")
 
 def faceBookChatBot(request):
     # print "YAHOOOOOO"
