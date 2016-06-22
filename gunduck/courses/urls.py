@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     # url(r'^(?P<course_type_id>[0-9]+)/join/$', views.join, name='join'),
     url(r'^chatbots/facebook/webhook/$', views.faceBookChatBot, name='faceBookChatBot'),
     url(r'^scrapper/rentOHouse/$', views.scrapRentOHouse, name='scrapRentOHouse'),
+    url(r'^scrapper/naukri/$', views.naukri, name='naukri'),
 
 )

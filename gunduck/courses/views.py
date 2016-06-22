@@ -42,6 +42,16 @@ def join(request, course_type_id):
         return HttpResponseRedirect(reverse('courses:results', args=(p.id,)))
     # return HttpResponse("You're joining a course of this course type %s." % course_type_id)
 
+def naukri(request):
+    print "AKSHAY"
+    url="http://www.naukri.com/java-android-django-python-developer-nodejs-ios-json-html-angularjs-sql-javascript-css-jobs-in-delhi-ncr"
+    page = urllib2.urlopen(url)
+    soup = BeautifulSoup(page)
+    #all_div=soup.find_all('span', class_='desig')
+    #length = len(all_div)
+
+    return HttpResponse(str(soup), content_type="application/json")
+
 def scrapRentOHouse(request):
     print "AKSHAY"
     url="http://www.magicbricks.com/property-for-sale/residential-real-estate?proptype=Multistorey-Apartment,Builder-Floor-Apartment,Penthouse,Studio-Apartment,Residential-House,Villa,Residential-Plot&cityName=Gurgaon"
@@ -51,7 +61,10 @@ def scrapRentOHouse(request):
     #results = []
     final = []
     print "AKSHAY2"
+    counter = 0
     for one_div in all_div:
+        print str(counter)
+        counter = counter + 1
         onclickString = str(one_div['onclick'])
         pra = onclickString.find('event')+8
         sub1 = onclickString[pra:]
