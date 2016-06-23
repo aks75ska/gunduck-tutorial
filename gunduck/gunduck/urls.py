@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^courses/' , include('courses.urls', namespace="courses")),
+    url(r'^webGL/' , include('webGL.urls', namespace="webGL")),
 
     url(r'^$', 'gunduck.views.homePage'),
 
